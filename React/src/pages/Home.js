@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { useState, useEffect } from "react";
 import { Scroll } from "../func/Scroll";
 import FloatNav from "../components/Float-nav";
+import CategoryPart from "../components/Category_part";
 
 export default function Home() {
 	const isScrolled = Scroll(250)
@@ -11,18 +12,7 @@ export default function Home() {
 		<>
 			{isScrolled?<FloatNav/>:<Nav/>}
 			<div className="whole-home">
-				<div className="first-home-part">
-					<img
-						className="background-image"
-						src={require("../imgs/spencer-davis-ONVA6s03hg8-unsplash.jpg")}
-					/>
-					<span className="first-home-part-writings">
-						<h2 className="first-home-part-writings-h2">
-							WELCOME TO MeetThePharaohs.com!
-						</h2>
-						<h3>Your Gateway to the Wonders of the Nile.</h3>
-					</span>
-				</div>
+				<CategoryPart img='spencer-davis-ONVA6s03hg8-unsplash.jpg' h2='WELCOME TO MeetThePharaohs.com!' h3='Your Gateway to the Wonders of the Nile.'/>
 				<div className="why-choose-home">
 					<h2>Why choose us</h2>
 					<div className="reasons-part">

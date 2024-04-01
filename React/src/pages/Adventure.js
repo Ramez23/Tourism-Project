@@ -15,7 +15,7 @@ export default function Adventure() {
         <>
             {isScrolled ? <FloatNav /> : <Nav />}
             <div className="hist-main">
-                <Category_part img='adventure.jpg' title='Adventure Tourism' def='Adventure Tourism in Egypt beckons thrill-seekers with a treasure trove of adrenaline-pumping experiences. Egypt’s vast deserts are an open playground for those who crave excitement. Desert safaris offer the opportunity to explore the mesmerizing dunes of the Sahara, where you can ride on a camel or even conquer the sands on a quad bike. Beneath the crystal-clear waters of the Red Sea, scuba diving enthusiasts will discover a vibrant underwater world teeming with colorful marine life, coral reefs, and sunken shipwrecks. But if you seek adventure of a different kind, don’t miss the chance to ascend into the skies of Luxor in a hot air balloon, providing breathtaking panoramic views of ancient wonders and the Nile.' />
+                <Category_part img='adventure.jpg' h2="DISCOVER EGYPT' S ADVENTURE THRILLS!" h3="Your Gateway to Unforgettable Experiences." />
                 <div className="rec-hist-part">
                     <h2>Recommended Places</h2>
                     <div className="cards-rec-hist">

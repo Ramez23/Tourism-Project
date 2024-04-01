@@ -13,9 +13,13 @@ export default function Nautical() {
     const isScrolled = Scroll(250)
     return (
         <>
-            {isScrolled?<FloatNav/>:<Nav/>}
+            {isScrolled ? <FloatNav /> : <Nav />}
             <div className="hist-main">
-                <Category_part img='naut.jpeg' title='Nautical Tourism' def="Nautical tourism in Egypt unveils a mesmerizing odyssey across the cerulean waters that embrace this historically enriched land. Exploring Egypt's maritime legacy introduces travelers to a diverse array of seafaring wonders, from bustling ports to ancient harbors steeped in centuries of maritime trade and exploration. The vibrant Mediterranean coastline weaves a vivid tapestry of coastal towns, each exuding its unique maritime allure. Alexandria's bustling port echoes with the tales of ancient mariners, while the Red Sea's coastal towns beckon divers and snorkelers to vibrant coral reefs. For those craving a secluded maritime retreat, the serene waters around the Sinai Peninsula offer a chance to sail along pristine coastlines, discovering hidden coves and secluded beaches." />
+                <Category_part
+                    img="naut.jpg"
+                    h2="EXPLORE EGYPT'S NAUTICAL TOURISM"
+                    h3="Discover Egypt's coastal treasures: pristine beaches, vibrant coral reefs, and ancient ports."
+                />
                 <div className="rec-hist-part">
                     <h2>Recommended Places</h2>
                     <div className="cards-rec-hist">
@@ -31,7 +35,7 @@ export default function Nautical() {
                     </div>
                 </div>
             </div>
-			<Footer name='footer-main' />
+            <Footer name='footer-main' />
         </>
     )
 }

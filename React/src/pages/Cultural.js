@@ -8,12 +8,15 @@ import { Scroll } from "../func/Scroll";
 import FloatNav from '../components/Float-nav'
 
 export default function Cultural() {
-    const isScrolled=Scroll(250)
+    const isScrolled = Scroll(250)
     return (
         <>
-            {isScrolled?<FloatNav/>:<Nav/>}
+            {isScrolled ? <FloatNav /> : <Nav />}
             <div className="hist-main">
-                <Category_part img='cultural.jpg' title='Cultural Tourism' def='Cultural Tourism in Egypt is a delightful immersion into a world where ancient traditions and contemporary vibrancy coexist harmoniously. As you embark on this cultural odyssey, you’ll discover the heart and soul of Egypt through its music and dance, where traditional rhythms and graceful movements have transcended time. The culinary delights of Egyptian cuisine await your taste buds, offering a compelling fusion of flavors and aromas that have been perfected over generations. Arts and crafts flourish here, with artisans crafting intricate pieces that reflect the nation’s rich heritage and creativity.' />
+                <Category_part
+                    img='cultural.jpg'
+                    h2="IMMERSE IN EGYPT' S CULTURAL RICHES!"
+                    h3='Your Passport to Cultural Exploration.' />
                 <div className="rec-hist-part">
                     <h2>Recommended Places</h2>
                     <div className="cards-rec-hist">
@@ -28,7 +31,7 @@ export default function Cultural() {
                     </div>
                 </div>
             </div>
-			<Footer name='footer-main' />
+            <Footer name='footer-main' />
         </>
     );
 }

@@ -3,19 +3,22 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import Category_part from "../components/Category_part";
 import { Scroll } from "../func/Scroll";
-import FloatNav from'../components/Float-nav'
+import FloatNav from '../components/Float-nav'
 export default function AboutUs() {
     const isScrolled1 = Scroll(250)
     const isScrolled2 = Scroll(700)
     return (
         <>
-            {isScrolled1?<FloatNav/>:<Nav/>}
+            {isScrolled1 ? <FloatNav /> : <Nav />}
             <div className="about-page">
-                <Category_part img='about.jpg' title='About Us' def="Welcome to MeetThePharaohs.com!, where our love for Egypt's timeless beauty fuels our mission to share its wonders with the world. Inspired by the desire to reveal the hidden treasures and authentic experiences awaiting travelers, we are dedicated to showcasing Egypt's lesser-known gems and promoting responsible tourism practices. Join us on a journey of discovery, adventure, and wonder as we unveil the mysteries of Egypt, one breathtaking moment at a time." />
+                <Category_part
+                    img='aboutdark .jpg'
+                    h2='About Us'
+                    h3="Welcome to MeetThePharaohs.com! We're passionate about sharing Egypt's timeless beauty with the world. Join us on a journey of discovery, adventure, and wonder as we unveil the mysteries of Egypt, one breathtaking moment at a time."
+                />
                 <div className="about-content">
                     <div className="about-each">
                         <span className="about-writings">
-                            <h2>Discover Egypt's Secrets with MeetThePharaohs.com</h2>
                             <h4>At MeetThePharaohs.com, we offer:</h4>
                             <ol className={isScrolled1 ? 'slide-in-list-on' : 'slide-in-list-off'}>
                                 <li><strong>Insider Insights:</strong> Explore hidden gems and off-the-beaten-path destinations.</li>
@@ -27,7 +30,6 @@ export default function AboutUs() {
                     </div>
                     <div className="about-each">
                         <span className="about-writings">
-                            <h2>Explore Egypt with MeetThePharaohs.com</h2>
                             <h4>Discover Egypt's wonders with us:</h4>
                             <ol className={isScrolled2 ? 'slide-in-list-on' : 'slide-in-list-off'}>
                                 <li><strong>Guides & Itineraries:</strong> From iconic landmarks to hidden gems, find everything you need to plan your adventure.</li>
@@ -38,7 +40,7 @@ export default function AboutUs() {
                         </span>
                     </div>
                 </div>
-                <Footer name='footer-main-about' />
+                <Footer name='footer-main' />
             </div>
 
         </>

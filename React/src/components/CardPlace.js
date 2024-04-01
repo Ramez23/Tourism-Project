@@ -23,9 +23,11 @@ export default function CardPlace(props) {
         <h4>{props.title}</h4>
         <p>{props.desc}</p>
         <span className="card-buttons">
-          <img src={require('../imgs/green-heart-emoji-2048x1835-ime8vvj2.png')} />
-          <button>View More</button>
+          <i class="fa-solid fa-heart fa-lg"></i>
         </span>
+      </span>
+      <span className="button">
+        <h5>View More</h5>
       </span>
     </div>
   );

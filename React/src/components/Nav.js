@@ -36,7 +36,7 @@ export default function Nav() {
 						</div>
 					</li>
 					<li>
-						<Link className="nav-link" >Tour Guides</Link>
+						<Link to={'/tourguides'} className="nav-link" >Tour Guides</Link>
 					</li>
 					<li>
 						<Link to={'/aboutus'} className="nav-link">About Us</Link>

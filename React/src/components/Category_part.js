@@ -17,11 +17,16 @@ export default function CategoryPart(props) {
   }, [props.img]);
 
   return (
-    <div className="first-hist-part">
-      {image && <img src={image} alt={props.title} />}
-      <span className="first-part-hist-writings">
-        <h2>{props.title}</h2>
-        <p>{props.def}</p>
+    <div className="first-home-part">
+      <img
+        className="background-image"
+        src={require(`../imgs/${props.img}`)}
+      />
+      <span className="first-home-part-writings">
+        <h2 className="first-home-part-writings-h2">
+          {props.h2}
+        </h2>
+        <h3>{props.h3}</h3>
       </span>
     </div>
   );

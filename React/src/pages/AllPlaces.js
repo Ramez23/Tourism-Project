@@ -5,8 +5,9 @@ import Footer from "../components/Footer";
 import data from '../data/places.json';
 import { Scroll } from "../func/Scroll";
 import FloatNav from '../components/Float-nav'
+import CategoryPart from "../components/Category_part";
 export default function All() {
-    const isScrolled=Scroll(250)
+    const isScrolled = Scroll(250)
     // State variables for filtering
     const [filterCriteria, setFilterCriteria] = useState('');
     const [filteredData, setFilteredData] = useState(data);
@@ -21,8 +22,9 @@ export default function All() {
 
     return (
         <>
-            {isScrolled?<FloatNav/>:<Nav/>}
+            {isScrolled ? <FloatNav /> : <Nav />}
             {/* Filter select */}
+            <CategoryPart img='all.jpg' h2='Our Marvelous Egypt' h3="Discover places to visit!" />
             <div className="places-whole">
                 <select
                     className="select-dropdown"
@@ -38,18 +40,18 @@ export default function All() {
                     <option value="Religious">Religious Tourism</option>
                 </select>
                 <button className='filter-button' onClick={filterData}>Filter</button>
-           
-            {/* Display filtered data */}
-            {filteredData.map(place => (
-                <CardPlace
-                    key={place.title}
-                    title={place.title}
-                    desc={place.desc}
-                    img={place.img}
-                />
-            ))}
-             </div>
-             <Footer name='footer-main' />
+
+                {/* Display filtered data */}
+                {filteredData.map(place => (
+                    <CardPlace
+                        key={place.title}
+                        title={place.title}
+                        desc={place.desc}
+                        img={place.img}
+                    />
+                ))}
+            </div>
+            <Footer name='footer-main' />
         </>
     )
 }

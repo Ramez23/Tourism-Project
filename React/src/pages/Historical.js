@@ -10,12 +10,16 @@ import FloatNav from '../components/Float-nav'
 export default function Historical() {
     // Filter the data to get only the places with historical tourism
     const historicalPlaces = data.filter(place => place.tourism === "historical");
-    const isScrolled=Scroll(250)
+    const isScrolled = Scroll(250)
     return (
         <>
-            {isScrolled?<FloatNav/>:<Nav/>}
+            {isScrolled ? <FloatNav /> : <Nav />}
             <div className="hist-main">
-                <Category_part img='hist.jpg' title='Historical Tourism' def='Historical Tourism in Egypt is an enchanting journey through the annals of time, where the echoes of ancient civilizations resonate in the very stones and sands of the land. As you embark on this exploration, you’ll stand in awe before the iconic Pyramids of Giza, an enduring testament to human ingenuity and engineering prowess. Nearby, the enigmatic Sphinx guards its secrets, inviting contemplation of millennia-old mysteries. In Luxor, the Valley of the Kings beckons, revealing the final resting place of Egyptian pharaohs, treasures, and temples that narrate stories etched in hieroglyphs.' />
+                <Category_part
+                    img="hist.jpg"
+                    h2="DISCOVER EGYPT'S HISTORICAL TREASURES!"
+                    h3="Explore Egypt's ancient wonders, where millennia-old temples, pyramids, and tombs reveal a glorious past."
+                />
                 <div className="rec-hist-part">
                     <h2>Recommended Places</h2>
                     <div className="cards-rec-hist">
@@ -31,7 +35,7 @@ export default function Historical() {
                     </div>
                 </div>
             </div>
-			<Footer name='footer-main' />
+            <Footer name='footer-main' />
         </>
     );
 }

@@ -15,7 +15,11 @@ export default function Religious() {
         <>
             {isScrolled ? <FloatNav /> : <Nav />}
             <div className="hist-main">
-                <Category_part img='religious.jpg' title='Religious Tourism' def='Religious Tourism in Egypt offers a profound journey through the spiritual tapestry of this ancient land. As you delve into Egypt’s religious heritage, you’ll encounter a rich mosaic of historical mosques and churches that have stood for centuries, witnessing the nation’s diverse faith traditions. From the majestic Sultan Hassan Mosque in Cairo to the serene Coptic churches of Old Cairo, these sacred sites offer a glimpse into Egypt’s religious history and architectural marvels. For those seeking a more remote pilgrimage, St. Catherine’s Monastery, nestled at the base of Mount Sinai, presents a spiritual haven. This ancient monastery houses a wealth of religious relics and art and offers a tranquil setting for contemplation.' />
+                <Category_part
+                    img="religious.jpg"
+                    h2="EXPERIENCE EGYPT'S RELIGIOUS TOURISM"
+                    h3="Explore Egypt's sacred sites, where ancient temples, mosques, and churches reveal a rich religious heritage."
+                />
                 <div className="rec-hist-part">
                     <h2>Recommended Places</h2>
                     <div className="cards-rec-hist">

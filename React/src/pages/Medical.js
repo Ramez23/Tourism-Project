@@ -17,7 +17,11 @@ export default function Medical() {
         <>
             {isScrolled ? <FloatNav /> : <Nav />}
             <div className="hist-main">
-                <Category_part img='medi.jpg' title='Medical Tourism' def="Medical tourism in Egypt merges modern healthcare with a rich cultural backdrop. Renowned hospitals in Cairo and specialized clinics offer high-quality care across various specialties. Beyond medical facilities, wellness retreats along the Red Sea provide a holistic approach to recovery. Egypt's medical tourism blends advanced treatments with a journey through a nation steeped in history, offering a unique and rejuvenating experience at the crossroads of healthcare and ancient culture." />
+                <Category_part
+                    img="medi.jpg"
+                    h2="EXPLORE EGYPT'S MEDICAL TOURISM"
+                    h3="Discover Egypt's top-quality medical facilities amidst historic and picturesque surroundings."
+                />
                 <div className="rec-hist-part">
                     <h2>Recommended Places</h2>
                     <div className="cards-rec-hist">
