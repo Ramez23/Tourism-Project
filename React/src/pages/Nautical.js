@@ -5,9 +5,11 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import data from "../data/places.json";
 import { Scroll } from "../func/Scroll";
+import ScreenSize from "../func/ScreenSize";
 import FloatNav from '../components/Float-nav'
 
 export default function Nautical() {
+    const isMobile = ScreenSize()
     // Extracting the nautical tourism places data from the imported JSON file
     const nauticalPlaces = data.filter(place => place.tourism === "nautical");
     const isScrolled = Scroll(250)
@@ -15,11 +17,18 @@ export default function Nautical() {
         <>
             {isScrolled ? <FloatNav /> : <Nav />}
             <div className="hist-main">
-                <Category_part
-                    img="naut.jpg"
-                    h2="EXPLORE EGYPT'S NAUTICAL TOURISM"
-                    h3="Discover Egypt's coastal treasures: pristine beaches, vibrant coral reefs, and ancient ports."
-                />
+                {isMobile ?
+                    <Category_part
+                        img="nautver.jpg"
+                        h2="EXPLORE EGYPT'S NAUTICAL TOURISM"
+                        h3="Discover Egypt's coastal treasures: pristine beaches, vibrant coral reefs, and ancient ports."
+                    /> :
+                    <Category_part
+                        img="naut.jpg"
+                        h2="EXPLORE EGYPT'S NAUTICAL TOURISM"
+                        h3="Discover Egypt's coastal treasures: pristine beaches, vibrant coral reefs, and ancient ports."
+                    />}
+
                 <div className="rec-hist-part">
                     <h2>Recommended Places</h2>
                     <div className="cards-rec-hist">

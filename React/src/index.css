@@ -136,7 +136,7 @@ body {
 	display: grid;
 	grid-template-columns: 1fr 7fr 1fr;
 	justify-content: center;
-	align-items:flex-start;
+	align-items: flex-start;
 	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 	margin-top: 30px;
 }
@@ -163,12 +163,13 @@ body {
 .card-rec-hist-writings p {
 	margin-top: 0;
 }
-.card-buttons i{
+
+.card-buttons i {
 	color: rgb(206, 201, 201);
 	transition: all 0.3s ease-in-out;
 }
 
-.card-buttons i:hover{
+.card-buttons i:hover {
 	color: black;
 	cursor: pointer;
 }
@@ -289,15 +290,6 @@ body {
 	top: 0;
 }
 
-.profile-img {
-	width: 40px;
-	filter: brightness(70%);
-	transition: all 0.3s ease;
-}
-
-.profile-img:hover {
-	filter: brightness(100%);
-}
 
 .logo-search {
 	display: flex;
@@ -686,7 +678,6 @@ body {
 
 .places-whole {
 	padding: 50px;
-	padding-top: 100px;
 }
 
 /*-----------------------------sign in page---------------------------------------*/
@@ -1001,8 +992,6 @@ body {
 	text-align: center;
 	margin-bottom: 30px;
 }
-
-
 
 .about-writings p {
 	font-size: 20px;

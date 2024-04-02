@@ -5,9 +5,11 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import data from "../data/places.json"
 import { Scroll } from "../func/Scroll";
+import ScreenSize from "../func/ScreenSize";
 import FloatNav from '../components/Float-nav'
 
 export default function Adventure() {
+    const isMobile = ScreenSize()
     // Filter the data to get only the places with adventure tourism
     const adventurePlaces = data.filter(place => place.tourism === 'adventure');
     const isScrolled = Scroll(250)
@@ -15,7 +17,11 @@ export default function Adventure() {
         <>
             {isScrolled ? <FloatNav /> : <Nav />}
             <div className="hist-main">
-                <Category_part img='adventure.jpg' h2="DISCOVER EGYPT' S ADVENTURE THRILLS!" h3="Your Gateway to Unforgettable Experiences." />
+                {isMobile ?
+                    <Category_part img='advver.jpg' h2="DISCOVER EGYPT' S ADVENTURE THRILLS!" h3="Your Gateway to Unforgettable Experiences." />
+                    :
+                    <Category_part img='adventure.jpg' h2="DISCOVER EGYPT' S ADVENTURE THRILLS!" h3="Your Gateway to Unforgettable Experiences." />
+                }
                 <div className="rec-hist-part">
                     <h2>Recommended Places</h2>
                     <div className="cards-rec-hist">

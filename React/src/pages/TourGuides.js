@@ -1,29 +1,29 @@
 import React from "react";
 import { Scroll } from '../func/Scroll'
-import { isCancel } from "axios";
+import ScreenSize from "../func/ScreenSize";
 import Floatnav from '../components/Float-nav'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import TourGuide from "../components/TourGuide";
-
+import Category_part from "../components/Category_part";
 export default function TourGuides() {
+    const isMobile = ScreenSize()
     const isScrolled = Scroll(250)
     return (
         <>
             {isScrolled ? <Floatnav /> : <Nav />}
             <div className="whole-tourguide">
-                <div className="first-home-part">
-                    <img
-                        className="background-image"
-                        src={require("../imgs/guide.jpeg")}
-                    />
-                    <span className="first-home-part-writings">
-                        <h2 className="first-home-part-writings-h2">
-                            EXPLORE WITH OUR TOUR GUIDES!
-                        </h2>
-                        <h3>Your Key to Unlocking Destination Delights.</h3>
-                    </span>
-                </div>
+                {isMobile ?
+                    <Category_part
+                        img='guidever.jpg'
+                        h2="EXPLORE WITH OUR TOUR GUIDES!"
+                        h3='Your Key to Unlocking Destination Delights.' />
+                    :
+                    <Category_part
+                        img='guide.jpeg'
+                        h2="EXPLORE WITH OUR TOUR GUIDES!"
+                        h3='Your Key to Unlocking Destination Delights.' />
+                }
                 <div className="staff-div">
                     <TourGuide img='tour3.jpeg' name='Ahmed Hassan' brief="Passionate about Egyptian history and culture. Fluent in English, French, and Arabic. Specializes in guiding visitors through the wonders of ancient Egypt, including the Pyramids of Giza and the temples of Luxor." city="Cairo" />
                     <TourGuide img='tour2.jpeg' name='Fatima Ali' brief="Enthusiastic and knowledgeable tour guide with a love for connecting visitors with the vibrant culture of Alexandria. Skilled in storytelling and making history come alive. Fluent in Arabic and English." city="Alexandria" />

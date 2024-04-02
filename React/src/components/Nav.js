@@ -10,7 +10,7 @@ export default function Nav() {
 			<div className="logo-search">
 				<span>
 					<Link to={'/'}>
-						<img src={require('../imgs/image-nT9eQgiX_U-transformed-removebg-preview (1).png')} width='80px' />
+						<img className="logo-img"  src={require('../imgs/image-nT9eQgiX_U-transformed-removebg-preview (1).png')} width='80px' />
 					</Link>
 				</span>
 

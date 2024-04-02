@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-
+import ScreenSize from '../func/ScreenSize'
 export default function CardPlace(props) {
   const [image, setImage] = useState(null);
-
+  const isMobile = ScreenSize()
   useEffect(() => {
     const loadImage = async () => {
       try {
@@ -21,7 +21,7 @@ export default function CardPlace(props) {
       {image && <img src={image} alt={props.title} />}
       <span className="card-rec-hist-writings">
         <h4>{props.title}</h4>
-        <p>{props.desc}</p>
+        {isMobile ?  <p>View More For Details</p>:<p>{props.desc}</p>}
         <span className="card-buttons">
           <i class="fa-solid fa-heart fa-lg"></i>
         </span>
