@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Scroll } from "../func/Scroll";
 import '@fortawesome/fontawesome-free/css/all.css';
-export default function Nav() {
+export default function Nav(props) {
 	const isScrolled = Scroll(250)
 	return (
 		<nav className='main-nav-body'>
@@ -44,8 +44,9 @@ export default function Nav() {
 					<li>
 						<Link className="nav-link">Blog</Link>
 					</li>
-					<li>
-						<Link to={'/sign'} className="nav-link"><i class="fa-regular fa-user fa-lg"></i></Link>
+					<li className="user-things">
+						<Link to={'/profile'} className="nav-link"><i class="fa-regular fa-user fa-lg"></i></Link>
+						<Link to={'/signin'} className="nav-link">Log In</Link>
 					</li>
 				</ul>
 			</div>

@@ -28,7 +28,8 @@ export default function Adventure() {
                         {/* Map through the filtered adventure places and render CardPlace components */}
                         {adventurePlaces.map(place => (
                             <CardPlace
-                                key={place.title}
+                                key={place.id}
+                                placeid={place.id}
                                 title={place.title}
                                 desc={place.desc}
                                 img={place.img}

@@ -1,5 +1,6 @@
 [
         {
+            "id": 1,
             "title": "Khan el-Khalili",
             "desc": "Khan el-Khalili (Arabic: خان الخليلي) is a famous bazaar and souq (or souk) in the historic center of Cairo, Egypt. Established as a center of trade in the Mamluk era and named for one of its several historic caravanserais.",
             "img": "khan.jpeg",
@@ -7,60 +8,70 @@
             "place": "Cairo"
         },
     {
+        "id": 2,
         "title": "Bibliotheca Alexandrina",
         "desc": "The Bibliotheca Alexandrina (Latin, 'Library of Alexandria';[1] Egyptian Arabic: مكتبة الإسكندرية, romanized: Maktabet al-Eskendereyya, pronounced [mækˈtæb(e)t eskendeˈɾejjæ]) (BA) is a major library and cultural center on the shore of the Mediterranean Sea in Alexandria, Egypt.",
         "img": "Bibliotheca Alexandrina 2.jpg",
         "tourism": "cultural"
     },
     {
+        "id": 3,
         "title": "Aswan Dam",
         "desc": "The Aswan Dam, or more specifically since the 1980s, the Aswan High Dam, is one of the world's largest embankment dams, which was built across the Nile in Aswan, Egypt, between 1960 and 1970. When it was completed, it was the tallest earthen dam in the world, eclipsing the United States' Chatuge Dam.",
         "img": "aswan dam.jpg",
         "tourism": "cultural"
     },
     {
+        "id": 4,
         "title": "Cairo Opera House",
         "desc": "The Cairo Opera House (Arabic: دار الأوبرا المصرية, Dār el-Opera el-Masreyya; literally 'Egyptian Opera House'), part of Cairo's National Cultural Centre is the main performing arts venue in the Egyptian capital.",
         "img": "opera.jpg",
         "tourism": "cultural",
         "place": "Cairo"
     }, {
+        "id": 5,
         "title": "Kharga Oasis",
         "desc": "Kharga Oasis is located in south Assiut, and it has inside the best deep wells that have lots of therapeutic benefits, including Nasser Wells and Bulaq Wells, which are self-flowing deep wells, stems at a depth of 1000 meters and a temperature of 28 ° C, that surrounded by areas of greenery.",
         "img": "kharga.jpg",
         "tourism": "medical"
     },
     {
+        "id": 6,
         "title": "Bahariya Oasis",
         "desc": "There is a spot there that is famous for healing and it is called 'Gabel Dakrour'. It contains about 400 sulfur and mineral water. There, you will find the best natural means to heal climatic properties, especially for patients who suffer from rheumatic issues, skin diseases, and gastritis from the famous Peshmo.",
         "img": "bah.jpg",
         "tourism": "medical"
     },
     {
+        "id": 7,
         "title": "Aswan City",
         "desc": "There are two centers in the city for treatment by water & sand. It is particularly successful in treating rheumatoids due to salt in seawater and the ultraviolet rays besides the usage of natural black sand.",
         "img": "aswan1.jpg",
         "tourism": "medical"
     },
     {
+        "id": 8,
         "title": "Siwa Oasis",
         "desc": "There are so many water springs there, in addition to saline lakes, that help in the treatment of lots of diseases. Located 3 km southeast of Siwa Oasis is Dakrour Mountain, which is known for its healing climatic properties. It is famous for the healing properties of its hot sands since ancient times, especially for rheumatic patients.",
         "img": "siwa.jpg",
         "tourism": "medical"
     },
     {
+        "id": 9,
         "title": "Gilf El Kebir Expedition",
         "desc": "Gilf El Kebir is a massive limestone plateau deep in the remote wilderness of the southwestern corner of Egypt, around 150 km from the borders of both the Libyan and Sudanese deserts. The area is considered uncharted territory, and historic and prehistoric discoveries are being made there until present day.",
         "img": "gilf.jpg",
         "tourism": "adventure"
     },
     {
+        "id": 10,
         "title": "Kayaking from Aswan to Luxor",
         "desc": "Yep, that’s right. You can actually paddle the 200 km down the Nile between these two ancient Egyptian cities -- but it takes time, physical fitness and an extreme sense of adventure.",
         "img": "kayak-around-philae-temple.jpg",
         "tourism": "adventure"
     },
     {
+        "id": 11,
         "title": "Skydiving at the Pyramids",
         "desc": "If you’re one of those people who gets a rush from the idea of throwing yourself out of a plane, then this is a level up for you: you can throw yourself out of the plane while looking down over a great wonder of the world.",
         "img": "skydiving.jpg",
@@ -68,75 +79,88 @@
         "place": "Cairo"
     },
     {
+        "id": 12,
         "title": "Diving with sharks in the Red Sea",
         "desc": "When you think of shark diving, you might picture being lowered into the ocean in a cage with Great Whites attacking you from all angles in South Africa. And while this is appealing for some, the reality of diving with sharks in the Red Sea in Egypt is a lot more peaceful and safe, while still giving you that extreme adrenaline rush you crave -- and really shows why we need to do our best to protect Egypt’s sharks.",
         "img": "diving.jpg",
         "tourism": "adventure"
     }, {
+        "id": 13,
         "title": "Luxor Temple",
         "desc": "The Luxor Temple (Arabic: معبد الأقصر) is a large Ancient Egyptian temple complex located on the east bank of the Nile River in the city today known as Luxor (ancient Thebes) and was constructed approximately 1400 BCE.",
         "img": "Templo_de_Luxor,_Luxor,_Egipto,_2022-04-01,_DD_01.jpg",
         "tourism": "historical"
     },
     {
+        "id": 14,
         "title": "Mortuary temple of Hatshepsut",
         "desc": "The mortuary temple of Hatshepsut (Egyptian: Ḏsr-ḏsrw meaning 'Holy of Holies') is a mortuary temple built during the reign of Pharaoh Hatshepsut of the Eighteenth Dynasty of Egypt. Located opposite the city of Luxor, it is considered to be a masterpiece of ancient architecture.",
         "img": "Templo_funerario_de_Hatshepsut,_Luxor,_Egipto,_2022-04-03,_DD_13.jpg",
         "tourism": "historical"
     },
     {
+        "id": 15,
         "title": "Karnak",
         "desc": "The Karnak Temple Complex, commonly known as Karnak (/ˈkɑːr.næk/), comprises a vast mix of temples, pylons, chapels, and other buildings near Luxor, Egypt. Construction at the complex began during the reign of Senusret I (reigned 1971–1926 BCE) in the Middle Kingdom (c. 2000–1700 BCE) and continued into the Ptolemaic Kingdom (305–30 BCE), although most of the extant buildings date from the New Kingdom.",
         "img": "karnak.jpg",
         "tourism": "historical"
     },
     {
+        "id": 16,
         "title": "Egyptian Museum",
         "desc": "The Museum of Egyptian Antiquities, commonly known as the Egyptian Museum (Arabic: المتحف المصري) (also called the Cairo Museum), located in Cairo, Egypt, houses the largest collection of Egyptian antiquities in the world.",
         "img": "The_Egyptian_Museum.jpg",
         "tourism": "historical"
     },{
+        "id": 17,
         "title": "Dahab",
         "desc": "Dahab is one of the most amazing places for diving in Egypt. With its famous three poles and blue hole, Dahab is a favourite spot for divers. Even if you are not a professional diver, you will always find expert divers there who will take you on a spectacular diving adventure.",
         "img": "dahab.jpg",
         "tourism": "nautical"
     },
     {
+        "id": 18,
         "title": "Hurghada",
         "desc": "Hurghada is one of the best and most famous destinations in Egypt for its beautiful beaches, corals, diving spots, and nightlife. Hurghada was once just a small fishing village back in the 1980s.",
         "img": "hurghada.jpg",
         "tourism": "nautical"
     },
     {
+        "id": 19,
         "title": "Ras Mohamed Nature Reserve",
         "desc": "This unique and spectacular location between the Gulf of Suez and the Gulf of Aqaba where Ras Mohamed Nature reserve is located makes it one of a kind. Because of the different salinity of waters from both gulfs, some amazing reefs and various kinds of fish were gathered there making Ras Mohamed the perfect spot for scuba divers.",
         "img": "ras.png",
         "tourism": "nautical"
     },
     {
+        "id": 20,
         "title": "El Gouna",
         "desc": "El Gouna is the paradise of Egypt, you will experience the luxury with the serenity and peace of that amazing Egyptian location. It is carefully crafted and designed to stand out among other resorts in Egypt.",
         "img": "gouna.jpg",
         "tourism": "nautical"
     }, {
+        "id": 21,
         "title": "Mosque of Ibn Tulun",
         "desc": "The Mosque of Ibn Tulun (Arabic: مسجد إبن طولون) is located in Cairo, Egypt. It is one of the oldest mosques in Egypt as well as the whole of Africa surviving in its full original form, and is the largest mosque in Cairo in terms of land area.",
         "img": "ibn.jpg",
         "tourism": "religious"
     },
     {
+        "id": 22,
         "title": "Saint Catherine's Monastery",
         "desc": "Saint Catherine's Monastery (Arabic: دير القدّيسة كاترين; Greek: Μονὴ τῆς Ἁγίας Αἰκατερίνης, officially the Sacred Autonomous Royal Monastery of Saint Catherine of the Holy and God-Trodden Mount Sinai, is a Christian monastery located in the Sinai Peninsula of Egypt. Located at the foot of Mount Sinai, it was built between 548 and 565, and is the world's oldest continuously inhabited Christian monastery.",
         "img": "saint.jpg",
         "tourism": "religious"
     },
     {
+        "id": 23,
         "title": "Hanging Church",
         "desc": "The Hanging Church is named for its location above a gatehouse of Babylon Fortress, the Roman fortress in Coptic Cairo (Old Cairo); its nave is suspended over a passage. The church is approached by twenty-nine steps; early travelers to Cairo dubbed it 'the Staircase Church'.",
         "img": "hanging-church.jpg",
         "tourism": "religious"
     },
     {
+        "id": 24,
         "title": "Al Sahaba Mosque",
         "desc": "Al Sahaba Mosque was inaugurated in 2017 by the Minister of Religious Endowments, Mohamed Mokhtar. The foundation stone for the Mosque was laid in January 2011, however, the construction was suspended for four months due to the events of the 25 January Revolution.",
         "img": "sharmjpg.jpg",

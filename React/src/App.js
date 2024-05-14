@@ -14,6 +14,7 @@ import All from './pages/AllPlaces';
 import SignLogin from './pages/SignLogin';
 import AboutUs from './pages/AboutUs';
 import TourGuides from './pages/TourGuides';
+import Profile from './pages/Profile';
 
 function App() {
 	return (
@@ -27,9 +28,11 @@ function App() {
 				<Route path='/nautical' element={<Nautical />}></Route>
 				<Route path='/medical' element={<Medical />}></Route>
 				<Route path='/allplaces' element={<All/>}></Route>
-				<Route path='/sign' element={<SignLogin/>}></Route>
+				<Route path='/profile' element={<Profile/>}></Route>
 				<Route path='/aboutus' element={<AboutUs/>}></Route>
 				<Route path='/tourguides' element={<TourGuides/>}></Route>
+				<Route path='/signin' element={<SignLogin/>}></Route>
+
 
 			</Routes>
 
