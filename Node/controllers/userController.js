@@ -1,86 +1,68 @@
-const User = require('./../models/userModel');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
+const express = require("express");
+const bcrypt = require("bcrypt");
+const User = require("../models/userModel");
 
-const filterObj = (obj, ...allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach(el => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
-  });
-  return newObj;
-};
+const router = express.Router();
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-
-  // SEND RESPONSE
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: {
-      users
-    }
-  });
-});
-
-exports.updateMe = catchAsync(async (req, res, next) => {
-  // 1) Create error if user POSTs password data
-  if (req.body.password || req.body.passwordConfirm) {
-    return next(
-      new AppError(
-        'This route is not for password updates. Please use /updateMyPassword.',
-        400
-      )
-    );
+router.post("/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const user = new User({ name, email, password });
+    await user.save();
+    res.status(201).send(user);
+  } catch (error) {
+    res.status(400).send(error);
   }
+});
 
-  // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'name', 'email');
-
-  // 3) Update user document
-  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
-    new: true,
-    runValidators: true
-  });
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user: updatedUser
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
     }
-  });
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(401).send({ error: "Invalid password" });
+    }
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
-exports.deleteMe = catchAsync(async (req, res, next) => {
-  await User.findByIdAndUpdate(req.user.id, { active: false });
-
-  res.status(204).json({
-    status: 'success',
-    data: null
-  });
+router.get("/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+    res.send(user);
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
 });
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!'
-  });
-};
-exports.createUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!'
-  });
-};
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!'
-  });
-};
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!'
-  });
-};
+router.put("/updatePassword", async (req, res) => {
+  try {
+    const { userId, currentPassword, newPassword } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+    const validPassword = await bcrypt.compare(currentPassword, user.password);
+    if (!validPassword) {
+      return res.status(401).send({ error: "Current password is incorrect" });
+    }
+    user.password = newPassword; // The password will be hashed in the user model's
+    await user.save();
+    res.send({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
+module.exports = router;

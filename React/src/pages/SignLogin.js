@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUser } from "../context/UserContext"; // Import useUser hook
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -18,41 +19,36 @@ export default function SignLogin() {
     password: "",
     confirmPassword: "",
   });
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
+  const { setUser } = useUser(); // Get setUser from context
 
   useEffect(() => {
     const signUpButton = document.getElementById("signUp");
     const signInButton = document.getElementById("signIn");
     const container = document.getElementById("container");
 
-    if (signInButton && signUpButton && container) {
-      signUpButton.addEventListener("click", () => {
-        container.classList.add("right-panel-active");
-      });
+    const handleSignUpClick = () =>
+      container.classList.add("right-panel-active");
+    const handleSignInClick = () =>
+      container.classList.remove("right-panel-active");
 
-      signInButton.addEventListener("click", () => {
-        container.classList.remove("right-panel-active");
-      });
+    if (signInButton && signUpButton && container) {
+      signUpButton.addEventListener("click", handleSignUpClick);
+      signInButton.addEventListener("click", handleSignInClick);
     }
 
-    // Cleanup: remove event listeners when component unmounts
     return () => {
       if (signInButton && signUpButton) {
-        signUpButton.removeEventListener("click", () => {
-          container.classList.add("right-panel-active");
-        });
-
-        signInButton.removeEventListener("click", () => {
-          container.classList.remove("right-panel-active");
-        });
+        signUpButton.removeEventListener("click", handleSignUpClick);
+        signInButton.removeEventListener("click", handleSignInClick);
       }
     };
   }, []);
 
   const handleSignUp = async (e) => {
-    e.preventDefault(); // Prevent default form behavior
+    e.preventDefault();
+    console.log("Form Data:", formData);
 
-    // Validate form data
     const { name, email, password, confirmPassword } = formData;
     let isValid = true;
     const newErrors = {
@@ -62,99 +58,79 @@ export default function SignLogin() {
       confirmPassword: "",
     };
 
-    // Email validation
-    const emailRegex = /^\S+@\S+\.\S+$/;
-    if (!emailRegex.test(email)) {
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
       newErrors.email = "Invalid email address";
       isValid = false;
     }
 
-    // Password validation
     if (password.length < 6) {
       newErrors.password = "Password must be at least 6 characters long";
       isValid = false;
     }
 
-    // Confirm password validation
     if (password !== confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
       isValid = false;
     }
 
+    console.log("Validation Errors:", newErrors);
+
+    setErrors(newErrors);
+
     if (!isValid) {
-      setErrors(newErrors);
-      return; // Exit the function early if form is not valid
+      console.log("Validation failed");
+      return;
     }
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/users/signup",
-        formData // Send the entire formData object in the request body
+        "http://localhost:3000/users/register",
+        {
+          name,
+          email,
+          password,
+        }
       );
+      setUser(response.data); // Store user data in context
       console.log("Sign-up successful!", response.data);
-      navigate("/"); // Redirect to home page after successful sign-up
+      navigate("/");
     } catch (error) {
-      console.error("Sign-up failed!", error.response.data);
-      // Handle specific error cases and update error state accordingly
-      const { message } = error.response.data;
-      if (message.includes("name")) {
-        setErrors({ ...errors, name: message });
-      } else if (message.includes("email")) {
-        setErrors({ ...errors, email: "Email already exists" });
-      } else if (message.includes("password")) {
-        setErrors({ ...errors, password: message });
-      } else if (message.includes("confirmPassword")) {
-        setErrors({ ...errors, confirmPassword: message });
-      }
+      console.error("Sign-up failed!", error);
+      setErrors((prev) => ({
+        ...prev,
+        formError: error.response
+          ? error.response.data.message
+          : "An unknown error occurred",
+      }));
     }
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent default form behavior
+    e.preventDefault();
 
-    // Validate form data
     const { email, password } = formData;
-    let isValid = true;
-    const newErrors = {
-      email: "",
-      password: "",
-    };
+    const newErrors = { email: "", password: "" };
 
-    // Email validation
-    const emailRegex = /^\S+@\S+\.\S+$/;
-    if (!emailRegex.test(email)) {
-      newErrors.email = "Invalid email address";
-      isValid = false;
-    }
-
-    // Password validation
     if (!password) {
       newErrors.password = "Password is required";
-      isValid = false;
-    }
-
-    if (!isValid) {
       setErrors(newErrors);
-      return; // Exit the function early if form is not valid
+      return;
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/users/login",
-        { email, password } // Send only email and password in the request body
-      );
+      const response = await axios.post("http://localhost:3000/users/login", {
+        email,
+        password,
+      });
+      setUser(response.data); // Store user data in context
       console.log("Login successful!", response.data);
       navigate("/");
-      // Handle successful login (e.g., store token, redirect to dashboard)
     } catch (error) {
-      console.error("Login failed!", error.response.data);
-      // Handle specific error cases and update error state accordingly
-      const { message } = error.response.data;
-      if (message.includes("email")) {
-        setErrors({ ...errors, email: message });
-      } else if (message.includes("password")) {
-        setErrors({ ...errors, password: message });
-      }
+      console.error("Login failed!", error);
+      setErrors((prev) => ({
+        ...prev,
+        formError: error.response.data.message || "An error occurred",
+      }));
     }
   };
 
