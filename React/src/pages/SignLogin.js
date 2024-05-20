@@ -84,7 +84,7 @@ export default function SignLogin() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/users/register",
+        "http://localhost:3000/api/v1/users/signup",
         {
           name,
           email,
@@ -118,10 +118,13 @@ export default function SignLogin() {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/users/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/users/login",
+        {
+          email,
+          password,
+        }
+      );
       setUser(response.data); // Store user data in context
       console.log("Login successful!", response.data);
       navigate("/");

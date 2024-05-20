@@ -1,35 +1,35 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const tourRoutes = require("./routes/tourRoutes");
-const userRoutes = require("./routes/userRoutes");
-const bookingRoutes = require("./routes/bookingRoutes");
-const placeRoutes = require("./routes/placeRoutes");
+const express = require('express');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const app = express();
-app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: 'http://localhost:3001', // Ensure the frontend URL is correct
+    credentials: true // Allow credentials to be included
   })
 );
 
-mongoose
-  .connect("mongodb://localhost:27017/App", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => console.error("Error connecting to MongoDB:", err));
+app.use(helmet());
+app.use(morgan('dev'));
+app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
+app.use(mongoSanitize());
+app.use(xss());
+app.use(hpp());
 
-app.use("/tours", tourRoutes);
-app.use("/users", userRoutes);
-app.use("/bookings", bookingRoutes);
-app.use("/places", placeRoutes);
+const reviewRouter = require('./routes/reviewRoutes');
+const tourRouter = require('./routes/tourRoutes');
+const userRouter = require('./routes/userRoutes');
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
+
+module.exports = app;

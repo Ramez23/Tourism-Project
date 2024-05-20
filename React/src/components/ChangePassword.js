@@ -1,33 +1,29 @@
+// ChangePassword.js
 import React, { useState } from "react";
-import axios from "axios";
 import { useUser } from "../context/UserContext";
+import { updateSettings } from "./updateSettings";
 
 export default function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const { user } = useUser();
-  const [message, setMessage] = useState("");
+  const { user } = useUser(); // Assuming `user` includes the user's token
 
   const handleChangePassword = async () => {
     if (newPassword !== confirmNewPassword) {
-      setMessage("New passwords do not match");
+      alert("New passwords do not match");
       return;
     }
 
-    try {
-      const response = await axios.put(
-        "http://localhost:3000/users/updatePassword",
-        {
-          userId: user._id,
-          currentPassword,
-          newPassword,
-        }
-      );
-      setMessage(response.data.message);
-    } catch (error) {
-      setMessage(error.response.data.error || "An error occurred");
-    }
+    await updateSettings(
+      {
+        passwordCurrent: currentPassword,
+        password: newPassword,
+        passwordConfirm: confirmNewPassword,
+      },
+      "password",
+      user.token
+    );
   };
 
   return (
@@ -57,7 +53,6 @@ export default function ChangePassword() {
         />
       </label>
       <button onClick={handleChangePassword}>Change Password</button>
-      {message && <p>{message}</p>}
     </div>
   );
 }
