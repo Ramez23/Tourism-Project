@@ -2,6 +2,71 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
+const multer = require('multer');
+
+// Multer configuration
+const storage = multer.memoryStorage();
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(new Error('Unsupported file type'), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5 // 5 MB
+  },
+  fileFilter: fileFilter
+});
+
+// Route handlers
+exports.uploadImage = [
+  upload.single('photo'), // Make sure the field name is 'photo'
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        throw new Error('File not found');
+      }
+
+      console.log('File:', req.file); // Log file details
+
+      const user = await User.findById(req.user.id);
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      user.photo = req.file.buffer;
+      await user.save();
+
+      res.status(200).send({ message: 'Photo uploaded successfully' });
+    } catch (error) {
+      console.error('Error uploading photo:', error); // Log the error
+      res.status(500).send({ message: error.message });
+    }
+  }
+];
+
+exports.getImage = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+
+    if (!user || !user.photo) {
+      throw new Error('No photo found');
+    }
+
+    res.set('Content-Type', 'image/jpeg'); // Assuming JPEG format
+    res.send(user.photo);
+  } catch (error) {
+    console.error('Error retrieving photo:', error); // Log the error
+    res.status(404).send({ message: 'Unable to retrieve photo' });
+  }
+};
+
+// Other userController methods...
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -9,6 +74,34 @@ const filterObj = (obj, ...allowedFields) => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
   });
   return newObj;
+};
+
+const getUser = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new AppError('No user found with that ID', 404));
+  }
+
+  let photoBase64 = '';
+  if (user.photo) {
+    photoBase64 = Buffer.from(user.photo).toString('base64');
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: {
+        ...user.toObject(),
+        photo: photoBase64
+      }
+    }
+  });
+});
+
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  getUser(req, res, next);
 };
 
 exports.getMe = (req, res, next) => {

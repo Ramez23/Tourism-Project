@@ -19,6 +19,9 @@ router.get('/me', userController.getMe, userController.getUser);
 router.patch('/updateMe', userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
+router.post('/me/photo', userController.uploadImage); // Ensure this line is correct
+router.get('/:userId/photo', userController.getImage);
+
 router.use(authController.restrictTo('admin'));
 
 router
