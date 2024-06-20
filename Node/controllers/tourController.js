@@ -2,6 +2,72 @@ const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('./../utils/appError');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
+const signToken = id => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN
+  });
+};
+
+// Helper function to create and send token in response
+const createSendToken = (tour, statusCode, res) => {
+  const token = signToken(tour._id);
+
+  // Remove password from output before sending response
+  tour.password = undefined;
+
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: {
+      tour
+    }
+  });
+};
+exports.loginTour = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  // Log request data
+  console.log('Request Data:', { email, password });
+
+  // Ensure both email and password are provided
+  if (!email || !password) {
+    return next(new AppError('Please provide both email and password!', 400));
+  }
+
+  // Retrieve the tour with the given email and explicitly select the password field
+  const tour = await Tour.findOne({ email }).select('+password');
+
+  // Log fetched tour and password
+  console.log('Fetched Tour:', tour);
+  if (tour) console.log('Stored Hashed Password:', tour.password);
+
+  // If no tour is found or the passwords do not match
+  if (!tour || !(await bcrypt.compare(password, tour.password))) {
+    // Log result of password comparison
+    console.log(
+      'Password comparison result:',
+      await bcrypt.compare(password, tour.password)
+    );
+    return next(new AppError('Incorrect email or password', 401));
+  }
+
+  // If successful, proceed to create and send a token
+  createSendToken(tour, 200, res);
+});
+
+// Logout Tour
+exports.logoutTour = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000), // 10 seconds
+    httpOnly: true
+  });
+  res
+    .status(200)
+    .json({ status: 'success', message: 'Logged out successfully!' });
+};
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';

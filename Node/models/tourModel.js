@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const slugify = require('slugify');
-// const User = require('./userModel');
-// const validator = require('validator');
-
+const validator = require('validator');
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -12,8 +11,33 @@ const tourSchema = new mongoose.Schema(
       trim: true,
       maxlength: [40, 'A tour name must have less or equal then 40 characters'],
       minlength: [10, 'A tour name must have more or equal then 10 characters']
-      // validate: [validator.isAlpha, 'Tour name must only contain characters']
     },
+    email: {
+      type: String,
+      required: [true, 'Please provide your email'],
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, 'Please provide a valid email']
+    },
+    password: {
+      type: String,
+      required: [true, 'Please provide a password'],
+      minlength: 8,
+      select: false
+    },
+    passwordConfirm: {
+      type: String,
+      required: [false, 'Please confirm your password'],
+      validate: {
+        validator: function(el) {
+          return el === this.password;
+        },
+        message: 'Passwords are not the same!'
+      }
+    },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
     slug: String,
     duration: {
       type: Number,
@@ -116,6 +140,20 @@ const tourSchema = new mongoose.Schema(
     toObject: { virtuals: true }
   }
 );
+
+tourSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  this.passwordConfirm = undefined;
+  next();
+});
+
+tourSchema.methods.correctPassword = async function(
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 // tourSchema.index({ price: 1 });
 tourSchema.index({ price: 1, ratingsAverage: -1 });

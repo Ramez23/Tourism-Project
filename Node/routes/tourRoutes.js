@@ -9,7 +9,8 @@ const router = express.Router();
 
 // POST /tour/234fad4/reviews
 // GET /tour/234fad4/reviews
-
+router.post('/login', tourController.loginTour);
+router.get('/logout', tourController.logoutTour);
 router.use('/:tourId/reviews', reviewRouter);
 
 router
