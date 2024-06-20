@@ -1,23 +1,20 @@
 const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
-const factory = require('./handlerFactory');
 const AppError = require('./../utils/appError');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-
+const factory = require('./handlerFactory');
+// Function to sign a JWT token based on the tour's ID
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN
   });
 };
 
-// Helper function to create and send token in response
+// Helper function to create and send the token in the response
 const createSendToken = (tour, statusCode, res) => {
   const token = signToken(tour._id);
-
-  // Remove password from output before sending response
-  tour.password = undefined;
-
+  tour.password = undefined; // Ensure password is not sent back in the response
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -27,143 +24,96 @@ const createSendToken = (tour, statusCode, res) => {
   });
 };
 
-exports.signupTour = async (req, res) => {
-  try {
-    const {
-      name,
-      email,
-      password,
-      summary,
-      startLocation,
-      price,
-      maxGroupSize
-    } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 12);
+// Asynchronous function to handle tour sign-up
+exports.signupTour = catchAsync(async (req, res) => {
+  const {
+    name,
+    email,
+    password,
+    summary,
+    startLocation,
+    price,
+    maxGroupSize
+  } = req.body;
 
-    const newTour = await Tour.create({
-      name,
-      email,
-      password: hashedPassword,
-      summary,
-      startLocation,
-      price,
-      maxGroupSize,
-      approved: false
-    });
+  const newTour = await Tour.create({
+    name,
+    email,
+    password,
+    summary,
+    startLocation,
+    price,
+    maxGroupSize,
+    approved: false
+  });
 
-    const token = signToken(newTour._id);
+  createSendToken(newTour, 201, res);
+});
 
-    res.status(201).json({
-      status: 'success',
-      token,
-      message: 'Sign up successfully',
-      approved: newTour.approved,
-      data: {
-        tour: {
-          id: newTour._id,
-          name: newTour.name,
-          email: newTour.email
-        }
-      }
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message
-    });
-  }
-};
-
-exports.getPendingTours = async (req, res) => {
-  try {
-    const pendingTours = await Tour.find({
-      approved: false
-    });
-    res.status(200).json({
-      status: 'success',
-      results: pendingTours.length,
-      data: { pendingTours }
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message
-    });
-  }
-};
-
-exports.approveTour = async (req, res) => {
-  try {
-    const guideId = req.params.id;
-    const updatedTour = await Tour.findByIdAndUpdate(
-      guideId,
-      { approved: true },
-      { new: true, runValidators: true }
-    );
-
-    if (!updatedTour) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'No tour found with that ID'
-      });
-    }
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        updatedTour
-      }
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message
-    });
-  }
-};
-
+// Asynchronous function to handle tour login
 exports.loginTour = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // Log request data
-  console.log('Request Data:', { email, password });
-
-  // Ensure both email and password are provided
   if (!email || !password) {
     return next(new AppError('Please provide both email and password!', 400));
   }
 
-  // Retrieve the tour with the given email and explicitly select the password field
   const tour = await Tour.findOne({ email }).select('+password');
 
-  // Log fetched tour and password
-  console.log('Fetched Tour:', tour);
-  if (tour) console.log('Stored Hashed Password:', tour.password);
+  if (!tour) {
+    return next(new AppError('Incorrect email or password', 401));
+  } else if (!tour.approved) {
+    return next(new AppError('Please wait for admin reviewing your data', 403));
+  }
 
-  // If no tour is found or the passwords do not match
-  if (!tour || !(await bcrypt.compare(password, tour.password))) {
-    // Log result of password comparison
-    console.log(
-      'Password comparison result:',
-      await bcrypt.compare(password, tour.password)
-    );
+  const passwordMatch = await bcrypt.compare(password, tour.password);
+  if (!passwordMatch) {
     return next(new AppError('Incorrect email or password', 401));
   }
 
-  // If successful, proceed to create and send a token
   createSendToken(tour, 200, res);
 });
 
-// Logout Tour
+// Function to handle tour logout
 exports.logoutTour = (req, res) => {
   res.cookie('jwt', 'loggedout', {
-    expires: new Date(Date.now() + 10 * 1000), // 10 seconds
+    expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
   res
     .status(200)
     .json({ status: 'success', message: 'Logged out successfully!' });
 };
+
+// Asynchronous function to get pending tours
+exports.getPendingTours = catchAsync(async (req, res) => {
+  const pendingTours = await Tour.find({ approved: false });
+  res.status(200).json({
+    status: 'success',
+    results: pendingTours.length,
+    data: { pendingTours }
+  });
+});
+
+// Asynchronous function to approve a tour
+exports.approveTour = catchAsync(async (req, res) => {
+  const guideId = req.params.id;
+  const updatedTour = await Tour.findByIdAndUpdate(
+    guideId,
+    { approved: true },
+    { new: true, runValidators: true }
+  );
+
+  if (!updatedTour) {
+    return res
+      .status(404)
+      .json({ status: 'fail', message: 'No tour found with that ID' });
+  }
+
+  res.status(200).json({ status: 'success', data: { updatedTour } });
+});
+
+// Add additional methods as needed...
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
