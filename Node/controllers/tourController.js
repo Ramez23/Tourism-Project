@@ -26,6 +26,102 @@ const createSendToken = (tour, statusCode, res) => {
     }
   });
 };
+
+exports.signupTour = async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      password,
+      summary,
+      startLocation,
+      price,
+      maxGroupSize
+    } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const newTour = await Tour.create({
+      name,
+      email,
+      password: hashedPassword,
+      summary,
+      startLocation,
+      price,
+      maxGroupSize,
+      approved: false
+    });
+
+    const token = signToken(newTour._id);
+
+    res.status(201).json({
+      status: 'success',
+      token,
+      message: 'Sign up successfully',
+      approved: newTour.approved,
+      data: {
+        tour: {
+          id: newTour._id,
+          name: newTour.name,
+          email: newTour.email
+        }
+      }
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: error.message
+    });
+  }
+};
+
+exports.getPendingTours = async (req, res) => {
+  try {
+    const pendingTours = await Tour.find({
+      approved: false
+    });
+    res.status(200).json({
+      status: 'success',
+      results: pendingTours.length,
+      data: { pendingTours }
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: error.message
+    });
+  }
+};
+
+exports.approveTour = async (req, res) => {
+  try {
+    const guideId = req.params.id;
+    const updatedTour = await Tour.findByIdAndUpdate(
+      guideId,
+      { approved: true },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedTour) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'No tour found with that ID'
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        updatedTour
+      }
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: error.message
+    });
+  }
+};
+
 exports.loginTour = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 

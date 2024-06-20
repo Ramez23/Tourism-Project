@@ -4,13 +4,30 @@ const authController = require('./../controllers/authController');
 const reviewRouter = require('./../routes/reviewRoutes');
 
 const router = express.Router();
-
 // router.param('id', tourController.checkID);
 
-// POST /tour/234fad4/reviews
-// GET /tour/234fad4/reviews
+router.post('/signup', tourController.signupTour);
+
+// Route to fetch pending tours that haven't been approved yet
+router.get(
+  '/pending-tours',
+  authController.protect,
+  authController.restrictTo('admin'),
+  tourController.getPendingTours
+);
+
+// Route to approve a tour
+router.patch(
+  '/approve-tour/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  tourController.approveTour
+);
+
 router.post('/login', tourController.loginTour);
 router.get('/logout', tourController.logoutTour);
+// POST /tour/234fad4/reviews
+// GET /tour/234fad4/reviews
 router.use('/:tourId/reviews', reviewRouter);
 
 router
